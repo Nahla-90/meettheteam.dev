@@ -12,6 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\User\User;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Validator\Validation;
 
 class RegisterUserCommand extends Command
 {
@@ -45,13 +49,35 @@ class RegisterUserCommand extends Command
         $email = $input->getArgument('email');
         $fullname = $input->getArgument('fullname');
 
-        $user=new Users();
-        $user->setEmail($email);
-        $user->setFullname($fullname);
+        /* get validator object*/
+        $validator = Validation::createValidator();
+        /* Set email Validation Constraints*/
+        $violations = $validator->validate($email,
+            [new NotBlank(), new Email()]
+        );
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        /* Check Email validation */
+        if (count($violations) > 0) {
+            $output->writeln('Invalid Email Format');
+        }else{
 
-        $output->writeln('User Registered successfuly');
+            /* Set fullname Validation Constraints*/
+            $violations = $validator->validate($fullname,
+                [new NotBlank(),new Type("string")]
+            );
+
+            /* Check Fullname validation */
+            if (count($violations) > 0) {
+                $output->writeln('Invalid Fullname Format');
+            }else{
+                $user=new Users();
+                $user->setEmail($email);
+                $user->setFullname($fullname);
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+
+                $output->writeln('User Registered successfuly');
+            }
+        }
     }
 }
