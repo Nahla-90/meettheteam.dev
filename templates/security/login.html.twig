@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}Sign In{% endblock %}
+{% block stylesheets %}
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset( '/assets/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset( '/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset( '/assets/fonts/iconic/css/material-design-iconic-font.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset( '/assets/css/util.css') }}">
+    <!--===============================================================================================-->
+    <link href="{{ asset( '/assets/css/main.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+
+    <div class="container-login100" style="background-image: url({{ asset('assets/images/bg-01.jpg') }});">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
+            <div class="d-flex justify-content-center">
+                <span class="login100-form-title p-b-37">
+					Sign In
+				</span>
+            </div>
+            <div class="d-flex justify-content-center form_container">
+                {% if message is defined %}
+                    <p class="help-block">{{ message }}</p>
+                {% endif %}
+            </div>
+            {% if loginForm is defined %}
+                {{ form_start(loginForm) }}
+                {{ form_widget(loginForm) }}
+                {{ form_end(loginForm) }}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

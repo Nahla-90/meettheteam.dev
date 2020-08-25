@@ -1,0 +1,42 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Colleague{% endblock %}
+
+{% block content %}
+    <h1>Colleague</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ colleague.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ colleague.Name }}</td>
+            </tr>
+            <tr>
+                {% if colleague.image.name != false %}
+                    <th>Picture</th>
+                    <td>
+                        <img class="img-thumbnail" src="{{ path_colleague_image~'/'~colleague.image.name }}">
+                    </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ colleague.role }}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{ colleague.notes }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('colleague_index') }}">back to list</a>
+
+    <a href="{{ path('colleague_edit', {'id': colleague.id}) }}">edit</a>
+
+    {{ include('colleague/_delete_form.html.twig') }}
+{% endblock %}

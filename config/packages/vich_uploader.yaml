@@ -1,0 +1,10 @@
+vich_uploader:
+  db_driver: orm
+  mappings:
+    colleague_image:
+      uri_prefix:         '%path_colleague_image%'
+      upload_destination: '%kernel.root_dir%/../public%path_colleague_image%'
+      inject_on_load: false
+      delete_on_update: true
+      delete_on_remove: true
+      namer:              vich_uploader.namer_uniqid

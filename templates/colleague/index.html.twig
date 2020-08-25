@@ -1,0 +1,45 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Colleagues{% endblock %}
+
+{% block content %}
+    <h1>Colleague index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Picture</th>
+                <th>Role</th>
+                <th>Notes</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for colleague in colleagues %}
+            <tr>
+                <td>{{ colleague.id }}</td>
+                <td>{{ colleague.Name }}</td>
+                <td>
+                    {% if colleague.image.name != false %}
+                    <img class="img-thumbnail" src="{{ path_colleague_image~'/'~colleague.image.name }}">
+                {% endif %}
+                </td>
+                <td>{{ colleague.role }}</td>
+                <td>{{ colleague.notes }}</td>
+                <td>
+                    <a href="{{ path('colleague_show', {'id': colleague.id}) }}">show</a>
+                    <a href="{{ path('colleague_edit', {'id': colleague.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('colleague_new') }}">Create new</a>
+{% endblock %}
