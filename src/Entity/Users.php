@@ -26,6 +26,7 @@ class Users
     private $email;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=50)
      */
     private $fullname;
